@@ -53,7 +53,7 @@ export default function Dashboard() {
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-sm font-medium text-gray-700 mb-4">Opens over time</h2>
         {loading ? (
-          <Skeleton className="h-[220px] w-full" />
+          <Skeleton className="h-55 w-full" />
         ) : (
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={statsHistory}>
