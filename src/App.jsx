@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Subscribers from "./pages/Subscribers";
 import Campaigns from "./pages/Campaigns";
 import CampaignEditor from "./pages/CampaignEditor";
+import CampaignDetail from "./pages/CampaignDetails";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
             <Route path="/subscribers" element={<Subscribers />} />
             <Route path="/campaigns" element={<Campaigns />} />
             <Route path="/campaigns/new" element={<CampaignEditor />} />
+            <Route path="/campaigns/:id" element={<CampaignDetail />} />
           </Routes>
         </main>
       </div>

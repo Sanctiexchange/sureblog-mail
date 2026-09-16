@@ -14,3 +14,13 @@ export const statsHistory = [
   { date: "Aug 20", opens: 320 }, { date: "Aug 27", opens: 410 },
   { date: "Sep 3", opens: 455 }, { date: "Sep 10", opens: 520 },
 ];
+
+export const campaignDetails = {
+  1: { opens: [
+    { name: "Sanctus Ekeh", email: "sanctus@gmail.com", openedAt: "2026-09-10 09:14" },
+    { name: "Amara Nwosu", email: "amara@icloud.com", openedAt: "2026-09-10 11:02" },
+  ], clickRate: 18 },
+  2: { opens: [
+    { name: "Amara Nwosu", email: "amara@icloud.com", openedAt: "2026-09-03 08:40" },
+  ], clickRate: 12 },
+};
