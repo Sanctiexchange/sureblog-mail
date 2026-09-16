@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Users, Mail, TrendingUp } from "lucide-react";
+import Skeleton from "../components/UI/Skeleton";
 import { subscribers, campaigns, statsHistory } from "../data/mockData";
 
 function StatCard({ icon: Icon, label, value }) {
@@ -17,6 +19,13 @@ function StatCard({ icon: Icon, label, value }) {
 }
 
 export default function Dashboard() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
+
   const activeSubs = subscribers.filter((s) => s.status === "active").length;
   const sentCampaigns = campaigns.filter((c) => c.status === "sent").length;
   const avgOpenRate = Math.round(
@@ -27,22 +36,34 @@ export default function Dashboard() {
     <div>
       <h1 className="text-2xl font-semibold text-gray-900 mb-6">Dashboard</h1>
 
-      <div className="grid grid-cols-3 gap-4 mb-8">
-        <StatCard icon={Users} label="Active Subscribers" value={activeSubs} />
-        <StatCard icon={Mail} label="Campaigns Sent" value={sentCampaigns} />
-        <StatCard icon={TrendingUp} label="Avg. Open Rate" value={`${avgOpenRate}%`} />
-      </div>
+      {loading ? (
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          {[1, 2, 3].map((i) => (
+            <Skeleton key={i} className="h-20" />
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          <StatCard icon={Users} label="Active Subscribers" value={activeSubs} />
+          <StatCard icon={Mail} label="Campaigns Sent" value={sentCampaigns} />
+          <StatCard icon={TrendingUp} label="Avg. Open Rate" value={`${avgOpenRate}%`} />
+        </div>
+      )}
 
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-sm font-medium text-gray-700 mb-4">Opens over time</h2>
-        <ResponsiveContainer width="100%" height={220}>
-          <LineChart data={statsHistory}>
-            <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
-            <YAxis stroke="#9CA3AF" fontSize={12} />
-            <Tooltip />
-            <Line type="monotone" dataKey="opens" stroke="#1E3A5F" strokeWidth={2} dot={false} />
-          </LineChart>
-        </ResponsiveContainer>
+        {loading ? (
+          <Skeleton className="h-[220px] w-full" />
+        ) : (
+          <ResponsiveContainer width="100%" height={220}>
+            <LineChart data={statsHistory}>
+              <XAxis dataKey="date" stroke="#9CA3AF" fontSize={12} />
+              <YAxis stroke="#9CA3AF" fontSize={12} />
+              <Tooltip />
+              <Line type="monotone" dataKey="opens" stroke="#1E3A5F" strokeWidth={2} dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </div>
   );
