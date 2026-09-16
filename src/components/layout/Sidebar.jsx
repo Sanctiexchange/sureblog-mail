@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Users, Send, Menu, X } from "lucide-react";
+import { LayoutDashboard, Users, Send, Settings as SettingsIcon, Menu, X } from "lucide-react";
 
 const links = [
   { to: "/", label: "Dashboard", icon: LayoutDashboard },
   { to: "/subscribers", label: "Subscribers", icon: Users },
   { to: "/campaigns", label: "Campaigns", icon: Send },
+  { to: "/settings", label: "Settings", icon: SettingsIcon },
 ];
 
 export default function Sidebar() {
@@ -13,18 +14,13 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile top bar */}
       <div className="md:hidden flex items-center justify-between bg-brand text-white px-4 py-3">
         <span className="font-semibold">SureBlog Mail</span>
         <button onClick={() => setOpen(true)}><Menu size={22} /></button>
       </div>
 
-      {/* Mobile overlay */}
-      {open && (
-        <div className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={() => setOpen(false)} />
-      )}
+      {open && <div className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={() => setOpen(false)} />}
 
-      {/* Sidebar */}
       <aside
         className={`fixed md:static top-0 left-0 h-full w-60 bg-brand text-white flex flex-col py-6 px-4 z-50 transform transition-transform duration-200 ${
           open ? "translate-x-0" : "-translate-x-full"

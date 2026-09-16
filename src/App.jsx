@@ -5,6 +5,7 @@ import Subscribers from "./pages/Subscribers";
 import Campaigns from "./pages/Campaigns";
 import CampaignEditor from "./pages/CampaignEditor";
 import CampaignDetail from "./pages/CampaignDetail";
+import Settings from "./pages/Settings";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="/campaigns" element={<Campaigns />} />
             <Route path="/campaigns/new" element={<CampaignEditor />} />
             <Route path="/campaigns/:id" element={<CampaignDetail />} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </main>
       </div>
