@@ -19,11 +19,11 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ addToast }}>
       {children}
-      <div className="fixed bottom-4 right-4 flex flex-col gap-2 z-[100]">
+      <div className="fixed bottom-4 right-4 flex flex-col gap-2 z-100">
         {toasts.map((t) => (
           <div
             key={t.id}
-            className={`flex items-center gap-2 px-4 py-3 rounded-md shadow-lg text-sm text-white min-w-[240px] ${
+            className={`flex items-center gap-2 px-4 py-3 rounded-md shadow-lg text-sm text-white min-w-60 ${
               t.type === "error" ? "bg-red-600" : "bg-brand"
             }`}
           >
