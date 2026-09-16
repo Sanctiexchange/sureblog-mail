@@ -2,14 +2,21 @@ import { useState } from "react";
 import { X, Search } from "lucide-react";
 import { subscribers as initialSubscribers } from "../data/mockData";
 
-function AddSubscriberModal({ onClose, onAdd }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+function SubscriberModal({ initialData, onClose, onSave }) {
+  const [name, setName] = useState(initialData?.name || "");
+  const [email, setEmail] = useState(initialData?.email || "");
+  const isEditing = Boolean(initialData);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!email) return;
-    onAdd({ id: Date.now(), name, email, status: "active", tags: [] });
+    onSave({
+      id: initialData?.id ?? Date.now(),
+      name,
+      email,
+      status: initialData?.status || "active",
+      tags: initialData?.tags || [],
+    });
     onClose();
   }
 
@@ -17,7 +24,7 @@ function AddSubscriberModal({ onClose, onAdd }) {
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-sm">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-semibold text-gray-900">Add Subscriber</h2>
+          <h2 className="font-semibold text-gray-900">{isEditing ? "Edit Subscriber" : "Add Subscriber"}</h2>
           <button onClick={onClose}><X size={18} className="text-gray-400" /></button>
         </div>
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
@@ -36,7 +43,7 @@ function AddSubscriberModal({ onClose, onAdd }) {
             className="border border-gray-200 rounded-md px-3 py-2 text-sm outline-none focus:border-brand"
           />
           <button type="submit" className="bg-brand text-white text-sm font-medium py-2 rounded-md hover:bg-brand-light">
-            Add
+            {isEditing ? "Save Changes" : "Add"}
           </button>
         </form>
       </div>
@@ -48,17 +55,37 @@ export default function Subscribers() {
   const [subscribers, setSubscribers] = useState(initialSubscribers);
   const [query, setQuery] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [editingSubscriber, setEditingSubscriber] = useState(null);
 
   const filtered = subscribers.filter(
     (s) => s.name.toLowerCase().includes(query.toLowerCase()) || s.email.toLowerCase().includes(query.toLowerCase())
   );
+
+  function handleSave(subscriberData) {
+    setSubscribers((prev) => {
+      const exists = prev.some((s) => s.id === subscriberData.id);
+      return exists
+        ? prev.map((s) => (s.id === subscriberData.id ? subscriberData : s))
+        : [subscriberData, ...prev];
+    });
+  }
+
+  function openEdit(subscriber) {
+    setEditingSubscriber(subscriber);
+    setShowModal(true);
+  }
+
+  function openAdd() {
+    setEditingSubscriber(null);
+    setShowModal(true);
+  }
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-semibold text-gray-900">Subscribers</h1>
         <button
-          onClick={() => setShowModal(true)}
+          onClick={openAdd}
           className="bg-brand text-white text-sm font-medium px-4 py-2 rounded-md hover:bg-brand-light"
         >
           Add Subscriber
@@ -87,7 +114,11 @@ export default function Subscribers() {
           </thead>
           <tbody className="divide-y divide-gray-100">
             {filtered.map((s) => (
-              <tr key={s.id}>
+              <tr
+                key={s.id}
+                onClick={() => openEdit(s)}
+                className="cursor-pointer hover:bg-gray-50"
+              >
                 <td className="px-4 py-3 text-gray-900">{s.name || "—"}</td>
                 <td className="px-4 py-3 text-gray-500">{s.email}</td>
                 <td className="px-4 py-3">
@@ -108,7 +139,11 @@ export default function Subscribers() {
       </div>
 
       {showModal && (
-        <AddSubscriberModal onClose={() => setShowModal(false)} onAdd={(s) => setSubscribers([s, ...subscribers])} />
+        <SubscriberModal
+          initialData={editingSubscriber}
+          onClose={() => setShowModal(false)}
+          onSave={handleSave}
+        />
       )}
     </div>
   );

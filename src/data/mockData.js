@@ -1,7 +1,7 @@
 export const subscribers = [
-  { id: 1, name: "Chidi Okafor", email: "chidi@example.com", status: "active", tags: ["culture"] },
-  { id: 2, name: "Amara Nwosu", email: "amara@example.com", status: "active", tags: ["business"] },
-  { id: 3, name: "Tunde Bello", email: "tunde@example.com", status: "unsubscribed", tags: ["ideas"] },
+  { id: 1, name: "Sanctus Ekeh", email: "sanctus@gmail.com", status: "active", tags: ["culture"] },
+  { id: 2, name: "Amara Nwosu", email: "amara@icloud.com", status: "active", tags: ["business"] },
+  { id: 3, name: "Tunde Bello", email: "tunde@yahoo.co.uk", status: "unsubscribed", tags: ["ideas"] },
 ];
 
 export const campaigns = [
