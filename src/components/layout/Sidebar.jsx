@@ -22,7 +22,7 @@ export default function Sidebar() {
       {open && <div className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={() => setOpen(false)} />}
 
       <aside
-        className={`fixed md:static top-0 left-0 h-full w-60 bg-brand text-white flex flex-col py-6 px-4 z-50 transform transition-transform duration-200 ${
+        className={`fixed md:static top-0 left-0 h-full w-70 bg-brand text-white flex flex-col py-6 px-4 z-50 transform transition-transform duration-200 ${
           open ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
       >

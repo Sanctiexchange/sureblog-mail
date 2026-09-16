@@ -4,7 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Subscribers from "./pages/Subscribers";
 import Campaigns from "./pages/Campaigns";
 import CampaignEditor from "./pages/CampaignEditor";
-import CampaignDetail from "./pages/CampaignDetail";
+import CampaignDetail from "./pages/CampaignDetails";
 import Settings from "./pages/Settings";
 
 export default function App() {
